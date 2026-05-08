@@ -1,0 +1,6 @@
+population,waste_generated,recycling_rate,rainfall,urban_growth,landfill_growth
+10000,45,30,20,10,50
+20000,60,25,25,15,75
+30000,80,20,30,20,100
+40000,100,15,35,25,140
+50000,120,10,40,30,180
