@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    display:flex;
+    background:linear-gradient(135deg,#07111f,#0f2b46,#16213e);
+    color:white;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:260px;
+    background:#081221;
+    padding:30px 20px;
+}
+
+.sidebar h2{
+    color:#00e5ff;
+    margin-bottom:40px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    padding:16px;
+    margin-bottom:14px;
+    background:rgba(255,255,255,0.05);
+    border-radius:14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.sidebar li:hover{
+    background:#00e5ff;
+    color:black;
+    transform:translateX(5px);
+}
+
+.main-content{
+    flex:1;
+    padding:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.06);
+    border-radius:24px;
+    padding:25px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom:25px;
+}
+
+.hero-section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.hero-section img{
+    width:350px;
+    border-radius:20px;
+}
+
+.hero-section h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.hero-section p{
+    color:#cfd8dc;
+    line-height:1.8;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-card{
+    text-align:center;
+}
+
+.stat-card h2{
+    color:#00e5ff;
+    font-size:42px;
+}
+
+.dashboard-grid,
+.chart-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#102840;
+    color:white;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#00e5ff;
+    color:black;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.prediction-box{
+    font-size:64px;
+    color:#00e5ff;
+    font-weight:700;
+}
+
+.risk-box{
+    font-size:28px;
+    color:#ffd166;
+    margin:20px 0;
+}
+
+.recommendation-box{
+    background:#102840;
+    padding:20px;
+    border-radius:16px;
+    margin-bottom:20px;
+}
+
+.alert-box{
+    background:#ffb703;
+    color:black;
+    padding:16px;
+    border-radius:16px;
+    font-weight:bold;
+}
+
+canvas{
+    background:white;
+    border-radius:16px;
+    padding:10px;
+}
+
+.chat-box{
+    height:300px;
+    overflow-y:auto;
+    background:#102840;
+    padding:15px;
+    border-radius:16px;
+    margin-bottom:15px;
+}
+
+.user-message,
+.bot-message{
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:12px;
+    max-width:80%;
+}
+
+.user-message{
+    background:#00e5ff;
+    color:black;
+    margin-left:auto;
+}
+
+.bot-message{
+    background:#1e3a5f;
+}
+
+.chat-input-area{
+    display:flex;
+    gap:10px;
+}
+
+.chat-input-area input{
+    flex:1;
+}
+
+@media(max-width:1000px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .dashboard-grid,
+    .chart-grid,
+    .hero-section{
+        grid-template-columns:1fr;
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+    }
+
+    .hero-section img{
+        width:100%;
+    }
+}
+/* IMAGE SECTION */
+
+.image-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.image-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    transition:0.4s;
+}
+
+.image-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    transition:0.5s;
+}
+
+.image-card:hover img{
+    transform:scale(1.08);
+}
+
+.image-overlay{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:25px;
+    background:linear-gradient(
+        transparent,
+        rgba(0,0,0,0.9)
+    );
+}
+
+.image-overlay h3{
+    font-size:24px;
+    margin-bottom:10px;
+    color:#00e5ff;
+}
+
+.image-overlay p{
+    color:#eeeeee;
+    line-height:1.6;
+}

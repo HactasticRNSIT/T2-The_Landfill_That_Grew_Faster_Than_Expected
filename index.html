@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoVision AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>♻️ EcoVision AI</h2>
+
+        <ul>
+            <li onclick="showSection('dashboard')">Dashboard</li>
+            <li onclick="showSection('prediction')">AI Prediction</li>
+            <li onclick="showSection('analysis')">Risk Analysis</li>
+            <li onclick="showSection('chatbot')">AI Chatbot</li>
+        </ul>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main-content">
+
+        <!-- HERO -->
+
+        <div class="hero-section card">
+
+            <div>
+                <h1>Smart Urban Landfill Intelligence System</h1>
+
+                <p>
+                    AI-powered landfill growth prediction and environmental monitoring platform.
+                </p>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+                 alt="AI Image">
+
+        </div>
+
+        <!-- STATS -->
+
+        <div class="stats-grid">
+
+            <div class="card stat-card">
+                <h2 id="riskZones">12</h2>
+                <p>High Risk Zones</p>
+            </div>
+
+            <div class="card stat-card">
+                <h2 id="wasteGenerated">180T</h2>
+                <p>Waste Generated</p>
+            </div>
+
+            <div class="card stat-card">
+                <h2>82%</h2>
+                <p>Landfill Capacity</p>
+            </div>
+
+            <div class="card stat-card">
+                <h2>94%</h2>
+                <p>AI Accuracy</p>
+            </div>
+
+        </div>
+
+        <!-- PREDICTION SECTION -->
+
+        <div id="prediction" class="dashboard-grid">
+
+            <!-- FORM -->
+
+            <div class="card form-card">
+
+                <h2>AI Prediction Panel</h2>
+
+                <div class="input-group">
+                    <label>Population</label>
+                    <input type="number" id="population">
+                </div>
+
+                <div class="input-group">
+                    <label>Waste Generated</label>
+                    <input type="number" id="waste">
+                </div>
+
+                <div class="input-group">
+                    <label>Recycling Rate</label>
+                    <input type="number" id="recycling">
+                </div>
+
+                <div class="input-group">
+                    <label>Rainfall</label>
+                    <input type="number" id="rainfall">
+                </div>
+
+                <div class="input-group">
+                    <label>Urban Growth</label>
+                    <input type="number" id="urban">
+                </div>
+
+                <button onclick="predictGrowth()">
+                    Run AI Prediction
+                </button>
+
+            </div>
+
+            <!-- RESULT -->
+
+            <div class="card result-card">
+
+                <h2>Prediction Result</h2>
+
+                <div class="prediction-box" id="predictionResult">
+                    --
+                </div>
+
+                <div class="risk-box" id="riskLevel">
+                    Waiting...
+                </div>
+
+                <div class="recommendation-box">
+
+                    <h3>AI Recommendation</h3>
+
+                    <p id="recommendationText">
+                        Enter values to receive AI recommendation.
+                    </p>
+
+                </div>
+
+                <div class="alert-box" id="alertText">
+                    ⚠️ No alerts currently.
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CHARTS -->
+
+        <div class="chart-grid">
+
+            <div class="card">
+
+                <h2>Landfill Growth Trend</h2>
+
+                <canvas id="growthChart"></canvas>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Waste Distribution</h2>
+
+                <canvas id="wasteChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <!-- CHATBOT -->
+
+        <div id="chatbot" class="card chatbot-card">
+
+            <h2>AI Assistant Chatbot</h2>
+
+            <div class="chat-box" id="chatBox">
+
+                <div class="bot-message">
+                    Hello 👋 Ask me about landfill management or recycling.
+                </div>
+
+            </div>
+
+            <div class="chat-input-area">
+
+                <input type="text"
+                       id="userInput"
+                       placeholder="Ask something...">
+
+                <button onclick="sendMessage()">
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // GRAPH
+
+        const ctx = document.getElementById('growthChart');
+
+        const growthChart = new Chart(ctx, {
+
+            type: 'line',
+
+            data: {
+
+                labels: ['2022','2023','2024','2025','2026'],
+
+                datasets: [{
+
+                    label: 'Landfill Growth',
+
+                    data: [40,60,80,100,120],
+
+                    borderColor:'#00e5ff',
+
+                    backgroundColor:'rgba(0,229,255,0.2)',
+
+                    fill:true,
+
+                    tension:0.5,
+
+                    borderWidth:4
+
+                }]
+            }
+        });
+
+        // PIE CHART
+
+        const wasteCtx = document.getElementById('wasteChart');
+
+        new Chart(wasteCtx, {
+
+            type:'doughnut',
+
+            data:{
+
+                labels:['Plastic','Organic','Paper','Metal'],
+
+                datasets:[{
+
+                    data:[35,40,15,10],
+
+                    backgroundColor:[
+                        '#00c853',
+                        '#2979ff',
+                        '#ff9800',
+                        '#ff1744'
+                    ]
+                }]
+            }
+        });
+
+        // AI PREDICTION
+
+        function predictGrowth(){
+
+            let population = Number(document.getElementById('population').value);
+            let waste = Number(document.getElementById('waste').value);
+            let recycling = Number(document.getElementById('recycling').value);
+            let rainfall = Number(document.getElementById('rainfall').value);
+            let urban = Number(document.getElementById('urban').value);
+
+            let prediction = (
+                population*0.002 +
+                waste*1.5 -
+                recycling*0.8 +
+                rainfall*0.5 +
+                urban*2
+            ).toFixed(0);
+
+            document.getElementById('predictionResult').innerHTML = prediction;
+
+            let risk = '';
+            let recommendation = '';
+            let alert = '';
+
+            if(prediction > 250){
+
+                risk = 'High Risk';
+
+                recommendation = 'Increase recycling participation and expand waste segregation immediately.';
+
+                alert = '⚠️ Critical landfill growth detected in urban zones.';
+
+            }
+
+            else if(prediction > 150){
+
+                risk = 'Medium Risk';
+
+                recommendation = 'Improve collection systems and optimize landfill usage.';
+
+                alert = '⚠️ Moderate growth detected.';
+            }
+
+            else{
+
+                risk = 'Low Risk';
+
+                recommendation = 'Landfill system currently stable.';
+
+                alert = '✅ No major environmental risk detected.';
+            }
+
+            document.getElementById('riskLevel').innerHTML = risk;
+            document.getElementById('recommendationText').innerHTML = recommendation;
+            document.getElementById('alertText').innerHTML = alert;
+
+            // UPDATE GRAPH
+
+            growthChart.data.datasets[0].data = [
+                prediction*0.3,
+                prediction*0.5,
+                prediction*0.7,
+                prediction*0.9,
+                prediction
+            ];
+
+            growthChart.update();
+        }
+
+        // CHATBOT
+
+        function sendMessage(){
+
+            let input = document.getElementById('userInput').value;
+
+            let chatBox = document.getElementById('chatBox');
+
+            let userMessage = document.createElement('div');
+            userMessage.className = 'user-message';
+            userMessage.innerHTML = input;
+
+            chatBox.appendChild(userMessage);
+
+            let botMessage = document.createElement('div');
+            botMessage.className = 'bot-message';
+
+            let response = '';
+
+            if(input.toLowerCase().includes('recycling')){
+                response = 'Improving recycling participation can reduce landfill stress significantly.';
+            }
+
+            else if(input.toLowerCase().includes('waste')){
+                response = 'Waste segregation and smart collection improve environmental sustainability.';
+            }
+
+            else if(input.toLowerCase().includes('landfill')){
+                response = 'Landfill growth can be controlled through predictive AI monitoring.';
+            }
+
+            else{
+                response = 'EcoVision AI recommends improving recycling and reducing unmanaged waste.';
+            }
+
+            botMessage.innerHTML = response;
+
+            setTimeout(() => {
+                chatBox.appendChild(botMessage);
+            }, 500);
+
+            document.getElementById('userInput').value = '';
+        }
+
+        function showSection(sectionId){
+
+            document.getElementById(sectionId).scrollIntoView({
+                behavior:'smooth'
+            });
+        }
+
+    </script>
+<div class="dashboard-grid"></div>
+</body>
+<div class="stats-grid"></div>
+</html>
+<!-- ENVIRONMENT IMAGE SECTION -->
+
+<div class="image-grid">
+
+    <div class="image-card">
+
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+             alt="AI Monitoring">
+
+        <div class="image-overlay">
+
+            <h3>AI Waste Monitoring</h3>
+
+            <p>
+                Smart AI analytics for urban landfill prediction.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="image-card">
+
+        <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=1200"
+             alt="Environment">
+
+        <div class="image-overlay">
+
+            <h3>Environmental Sustainability</h3>
+
+            <p>
+                Reducing environmental stress through smart waste management.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="image-card">
+
+        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200"
+             alt="Smart City">
+
+        <div class="image-overlay">
+
+            <h3>Smart City Infrastructure</h3>
+
+            <p>
+                AI-powered solutions for future sustainable cities.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
